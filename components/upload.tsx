@@ -225,6 +225,7 @@ export default function UploadComponent() {
                 e.preventDefault();
                 const value = e.currentTarget.value;
                 window.localStorage.setItem("CLAUDINARY_API_KEY", value);
+                setApiKey(value);
                 toast.success("API key successfully set up!");
               }}
             >
