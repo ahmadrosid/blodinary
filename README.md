@@ -17,7 +17,7 @@ Currently we are only able to upload image files. The next step is to support up
 ## Credit
 
 - Drag and Drop component from [jaumegelabert](https://jaumegelabert.dev/components/uploader).
-- ShadCN [ui](https://ui.shadcn.com/)
+- shadcn/ui - [ui](https://ui.shadcn.com/)
 
 ## LICENSE
 
