@@ -339,7 +339,9 @@ export default function UploadComponent() {
             })}
           </div>
         )}
-        {fileDropError && <p style={{ color: "red" }}>{fileDropError}</p>}
+        {fileDropError && (
+          <p className="text-sm p-2 text-red-500">{fileDropError}</p>
+        )}
       </div>
     </>
   );
