@@ -1,12 +1,12 @@
 # Blodinary
 
-Upload blob file to Claudinary powered by Next.js.
+Upload blob file to Cloudinary powered by Next.js.
 
 ![blodinady-demo](./blodinary-demo.png)
 
 ## Required!
 
-Please make sure to setup upload preset with preset name `public` in Claudinary.
+Please make sure to setup upload preset with preset name `public` in Cloudinary.
 
 ![preset-public](./setting-preset.png)
 

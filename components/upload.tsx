@@ -19,8 +19,8 @@ async function uploadFile({
   cloudName: string;
   file: File;
 }) {
-  const api_key = window.localStorage.getItem("CLAUDINARY_API_KEY");
-  if (!api_key) throw new Error("Please setup CLAUDINARY_API_KEY!!!");
+  const api_key = window.localStorage.getItem("CLOUDNARU_API_KEY");
+  if (!api_key) throw new Error("Please setup CLOUDNARU_API_KEY!!!");
   const formData = new FormData();
   formData.append("file", file);
   formData.append("api_key", api_key);
@@ -46,7 +46,7 @@ export default function UploadComponent() {
   const [imagePreviews, setImagePreviews] = useState<{ [key: string]: string }>(
     {}
   );
-  const [CLAUDINARY_API_KEY, setApiKey] = useState<string | null>(null);
+  const [CLOUDNARU_API_KEY, setApiKey] = useState<string | null>(null);
 
   const [dragOver, setDragOver] = useState<boolean>(false);
   const [fileDropError, setFileDropError] = useState<string>("");
@@ -149,9 +149,8 @@ export default function UploadComponent() {
   }, [files]);
 
   useEffect(() => {
-    const CLAUDINARY_API_KEY =
-      window.localStorage.getItem("CLAUDINARY_API_KEY");
-    setApiKey(CLAUDINARY_API_KEY);
+    const CLOUDNARU_API_KEY = window.localStorage.getItem("CLOUDNARU_API_KEY");
+    setApiKey(CLOUDNARU_API_KEY);
   }, []);
 
   return (
@@ -165,7 +164,7 @@ export default function UploadComponent() {
             <div>
               <p className="font-semibold mb-0">Upload files</p>
               <p className="text-sm text-neutral-500 -mt-1">
-                Drag and drop your files to upload to Claudinary.
+                Drag and drop your files to upload to Cloudinary.
               </p>
             </div>
           </div>
@@ -212,19 +211,19 @@ export default function UploadComponent() {
           />
         </form>
 
-        {CLAUDINARY_API_KEY ? (
+        {CLOUDNARU_API_KEY ? (
           ""
         ) : (
           <div className="p-2 flex flex-col gap-2 border-t">
             <p className="text-sm font-semibold text-rose-500">
-              Please add claudinary apikey!
+              Please add cloudinary apikey!
             </p>
             <form
               className="flex gap-2"
               onSubmit={(e) => {
                 e.preventDefault();
                 const value = e.currentTarget.value;
-                window.localStorage.setItem("CLAUDINARY_API_KEY", value);
+                window.localStorage.setItem("CLOUDNARU_API_KEY", value);
                 setApiKey(value);
                 toast.success("API key successfully set up!");
               }}
@@ -233,7 +232,7 @@ export default function UploadComponent() {
                 className="p-2 rounded-md text-sm px-2 border w-full shadow-sm focus:outline-none"
                 placeholder="RqgsQ_y6J..."
                 type="password"
-                defaultValue={CLAUDINARY_API_KEY || ""}
+                defaultValue={CLOUDNARU_API_KEY || ""}
               />
               <button className="text-sm bg-blue-700 p-2 px-4 text-white rounded-md shadow">
                 Submit

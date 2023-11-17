@@ -9,8 +9,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Blodinary - Upload blob file to Claudinary",
-  description: "Upload blob file to Claudinary",
+  title: "Blodinary - Upload blob file to Cloudinary",
+  description: "Upload blob file to Cloudinary",
 };
 
 export default function RootLayout({

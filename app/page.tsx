@@ -12,7 +12,7 @@ export default function Home() {
               Blodinary
             </h1>
             <h1 className="font-normal text-xl tracking-tighter text-neutral-800">
-              Upload blob file to Claudinary
+              Upload blob file to Cloudinary
             </h1>
           </div>
           <UploadComponent />
