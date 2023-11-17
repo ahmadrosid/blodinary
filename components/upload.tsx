@@ -165,7 +165,7 @@ export default function UploadComponent() {
             <div>
               <p className="font-semibold mb-0">Upload files</p>
               <p className="text-sm text-neutral-500 -mt-1">
-                Drag and drop your files. Will not be saved.
+                Drag and drop your files to upload to Claudinary.
               </p>
             </div>
           </div>
