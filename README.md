@@ -6,7 +6,7 @@ Upload blob file to Claudinary powered by Next.js.
 
 ## Required!
 
-Please make sure to setup upload preset with preset name `public`.
+Please make sure to setup upload preset with preset name `public` in Claudinary.
 
 ![preset-public](./public-upload-preset.png)
 
