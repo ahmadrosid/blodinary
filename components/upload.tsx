@@ -19,8 +19,8 @@ async function uploadFile({
   cloudName: string;
   file: File;
 }) {
-  const api_key = window.localStorage.getItem("CLOUDNARU_API_KEY");
-  if (!api_key) throw new Error("Please setup CLOUDNARU_API_KEY!!!");
+  const api_key = window.localStorage.getItem("CLOUDINARY_API_KEY");
+  if (!api_key) throw new Error("Please setup CLOUDINARY_API_KEY!!!");
   const formData = new FormData();
   formData.append("file", file);
   formData.append("api_key", api_key);
@@ -46,7 +46,7 @@ export default function UploadComponent() {
   const [imagePreviews, setImagePreviews] = useState<{ [key: string]: string }>(
     {}
   );
-  const [CLOUDNARU_API_KEY, setApiKey] = useState<string | null>(null);
+  const [CLOUDINARY_API_KEY, setApiKey] = useState<string | null>(null);
 
   const [dragOver, setDragOver] = useState<boolean>(false);
   const [fileDropError, setFileDropError] = useState<string>("");
@@ -149,8 +149,9 @@ export default function UploadComponent() {
   }, [files]);
 
   useEffect(() => {
-    const CLOUDNARU_API_KEY = window.localStorage.getItem("CLOUDNARU_API_KEY");
-    setApiKey(CLOUDNARU_API_KEY);
+    const CLOUDINARY_API_KEY =
+      window.localStorage.getItem("CLOUDINARY_API_KEY");
+    setApiKey(CLOUDINARY_API_KEY);
   }, []);
 
   return (
@@ -211,7 +212,7 @@ export default function UploadComponent() {
           />
         </form>
 
-        {CLOUDNARU_API_KEY ? (
+        {CLOUDINARY_API_KEY ? (
           ""
         ) : (
           <div className="p-2 flex flex-col gap-2 border-t">
@@ -223,7 +224,7 @@ export default function UploadComponent() {
               onSubmit={(e) => {
                 e.preventDefault();
                 const value = e.currentTarget.value;
-                window.localStorage.setItem("CLOUDNARU_API_KEY", value);
+                window.localStorage.setItem("CLOUDINARY_API_KEY", value);
                 setApiKey(value);
                 toast.success("API key successfully set up!");
               }}
@@ -232,7 +233,7 @@ export default function UploadComponent() {
                 className="p-2 rounded-md text-sm px-2 border w-full shadow-sm focus:outline-none"
                 placeholder="RqgsQ_y6J..."
                 type="password"
-                defaultValue={CLOUDNARU_API_KEY || ""}
+                defaultValue={CLOUDINARY_API_KEY || ""}
               />
               <button className="text-sm bg-blue-700 p-2 px-4 text-white rounded-md shadow">
                 Submit
