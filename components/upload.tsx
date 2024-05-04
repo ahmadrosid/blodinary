@@ -15,9 +15,11 @@ import { toast } from "sonner";
 async function uploadFile({
   cloudName,
   file,
+  isVideoFile,
 }: {
   cloudName: string;
   file: File;
+  isVideoFile: boolean;
 }) {
   const api_key = window.localStorage.getItem("CLOUDINARY_API_KEY");
   if (!api_key) throw new Error("Please setup CLOUDINARY_API_KEY!!!");
@@ -26,8 +28,14 @@ async function uploadFile({
   formData.append("api_key", api_key);
   formData.append("upload_preset", "public");
 
+  let resource = "image";
+  if (isVideoFile) {
+    formData.append('resource_type', 'video');
+    resource = "video";
+  }
+
   return await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    `https://api.cloudinary.com/v1_1/${cloudName}/${resource}/upload`,
     {
       method: "POST",
       body: formData,
@@ -43,6 +51,7 @@ export default function UploadComponent() {
   const [files, setFiles] = useState<BlodFile[]>([]);
   const [loadingState, setLoadingState] = useState<any>({});
   const [previewImage, setPreviewImage] = useState<any>(null);
+  const [isVideoFile, setIsVideoFile] = useState(false);
   const [imagePreviews, setImagePreviews] = useState<{ [key: string]: string }>(
     {}
   );
@@ -64,8 +73,8 @@ export default function UploadComponent() {
 
     const selectedFiles = Array.from(e.dataTransfer.files);
 
-    if (selectedFiles.some((file) => file.type.split("/")[0] !== "image")) {
-      return setFileDropError("Please provide only image files to upload!");
+    if (selectedFiles[0].type.split("/")[0] == 'video') {
+      setIsVideoFile(true);
     }
 
     setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
@@ -75,8 +84,8 @@ export default function UploadComponent() {
   const fileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files as FileList);
 
-    if (selectedFiles.some((file) => file.type.split("/")[0] !== "image")) {
-      return setFileDropError("Please provide only image files to upload!");
+    if (selectedFiles[0].type.split("/")[0] == 'video') {
+      setIsVideoFile(true);
     }
 
     setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
@@ -86,7 +95,7 @@ export default function UploadComponent() {
   const simulateLoading = async (file: File) => {
     try {
       setLoadingState((prev: any) => ({ ...prev, [file.name]: true }));
-      const result = await uploadFile({ cloudName: "dr15yjl8w", file });
+      const result = await uploadFile({ cloudName: "dr15yjl8w", file, isVideoFile });
       setLoadingState((prev: any) => ({ ...prev, [file.name]: false }));
       setFiles((prev) => {
         const newFiles = [...prev.slice(0, prev.length - 1)];
@@ -120,15 +129,8 @@ export default function UploadComponent() {
     return withDots.split("").reverse().join("");
   };
 
-  const handlePreview = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      setPreviewImage(e.target.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   const generatePreview = (file: File) => {
+    if (isVideoFile) return;
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreviews((prev) => ({
@@ -261,13 +263,15 @@ export default function UploadComponent() {
                       ) : (
                         preview && (
                           <div className="relative h-14 w-14">
-                            <Image
-                              src={preview}
-                              alt="Preview"
-                              fill
-                              className="rounded-md h-full w-full border"
-                              style={{ objectFit: "cover" }}
-                            />
+                            {isVideoFile ? null : (
+                                <Image
+                                  src={preview}
+                                  alt="Preview"
+                                  fill
+                                  className="rounded-md h-full w-full border"
+                                  style={{ objectFit: "cover" }}
+                                  />
+                            )}
                           </div>
                         )
                       )}
