@@ -122,11 +122,28 @@ export default function UploadComponent() {
     });
   };
 
-  const formatNumberWithDots = (number: number): string => {
-    const numStr = number.toString();
-    const reversedStr = numStr.split("").reverse().join("");
-    const withDots = reversedStr.replace(/(\d{3})(?=\d)/g, "$1.");
-    return withDots.split("").reverse().join("");
+  const formatNumberWithDots = (bytes: number): string => {
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let size = bytes;
+    let unitIndex = 0;
+    
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+    
+    // Round to 2 decimal places if not bytes
+    const formattedSize = unitIndex === 0 ? size : size.toFixed(2);
+    
+    // Add dots for thousand separators for bytes
+    if (unitIndex === 0) {
+      const numStr = formattedSize.toString();
+      const reversedStr = numStr.split("").reverse().join("");
+      const withDots = reversedStr.replace(/(\d{3})(?=\d)/g, "$1.");
+      return `${withDots.split("").reverse().join("")} ${units[unitIndex]}`;
+    }
+    
+    return `${formattedSize} ${units[unitIndex]}`;
   };
 
   const generatePreview = (file: File) => {
@@ -294,7 +311,7 @@ export default function UploadComponent() {
                         </div>
                       </div>
                       <p className="text-xs text-neutral-500">
-                        {formatNumberWithDots(file.size)} Bytes
+                        {formatNumberWithDots(file.size)}
                       </p>
                     </div>
                   </div>
